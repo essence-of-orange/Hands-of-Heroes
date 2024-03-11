@@ -1,0 +1,6 @@
+class HHPlayer {
+    //Constructor
+    constructor(){
+        
+    }
+}

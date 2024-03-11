@@ -1,0 +1,6 @@
+class HHBattle {
+    //Constructor
+    constructor(){
+        
+    }
+}

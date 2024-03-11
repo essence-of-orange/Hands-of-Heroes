@@ -1,0 +1,6 @@
+class HHDeck {
+    //Constructor
+    constructor(){
+        
+    }
+}

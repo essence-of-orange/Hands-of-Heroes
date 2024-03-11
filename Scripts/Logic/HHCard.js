@@ -1,0 +1,6 @@
+class HHCard {
+    //Constructor
+    constructor(){
+        
+    }
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="application-name" content="Hand of Heroes">
+  <meta name="author" content="Peter Houlihan">
+  <meta name="description" content="Fun multiplayer fantasy cardgame">
+  <meta name="keywords" content="browser, game, cardgame, multiplayer, fantasy, casual">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hand of Heroes</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="icon" href="./cards.ico" type="image/x-icon">
+</head>
+
+<body>
+  <main>
+    <div id="left_bar"></div>
+    <div id="game_container">
+      <div id="title_container">
+        <h1 id="title"></h1>
+      </div>
+      <div id="canvas_container">
+        <canvas id="canvas" width="800" height="600">
+          We're sorry but this application requires a browser which supports canvas.
+        </canvas>
+      </div>
+      <div id="lobby_container">
+        <div id="member_list">
+        </div>
+        <div id="chat_container">
+          <div id="chat_box">
+          </div>
+          <div id="chat_bar_container">
+            <input id="chat_bar" disabled type="text" name="chat_bar" placeholder="Type your message here" onkeypress="gameManager.lobby.barMessage(event)"><br>
+            <button id="chat_button" disabled onclick="gameManager.lobby.sendMessage()">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="right_bar"></div>
+  </main>
+  <script src="./Scripts/bootstrap.js"></script>
+</body>
+
+</html>
