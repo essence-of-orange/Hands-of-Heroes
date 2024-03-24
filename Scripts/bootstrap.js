@@ -35,9 +35,9 @@ document.head.append(loaderScript);
 
 //Handle mouse input
 var gameManager;
-canvas.addEventListener('mousedown', function(event) {
+canvas.addEventListener('mousedown', function (event) {
     //Check game is running
-    if(loader.status.gameReady){
+    if (loader.status.gameReady) {
         //Find coordinates
         const bounds = canvas.getBoundingClientRect();
         const clickX = Math.floor(event.clientX - bounds.left);
@@ -52,7 +52,7 @@ canvas.addEventListener('mousedown', function(event) {
 });
 
 //Handle mouse movement
-canvas.addEventListener('mousemove', function(event) {
+canvas.addEventListener('mousemove', function (event) {
     //Record coordinates
     mouse.x = event.offsetX;
     mouse.y = event.offsetY;
@@ -65,8 +65,8 @@ function mainLoop(currentTime) {
     time.currentTime = currentTime;
     time.deltaTime = time.currentTime - time.prevTime;
 
-    //Draw game
-    gameManager.draw();
+    //Update game
+    gameManager.update();
 
     //Call next loop
     window.requestAnimationFrame(mainLoop);
@@ -82,12 +82,21 @@ function loaderLoop(currentTime) {
     loader.draw();
 
     //Start next loop
-    if(loader.status.gameReady){
-        //Initialise game manager
-        gameManager = new HHManager();
+    if (loader.status.gameReady) {
+        //Fade
+        fade("out");
 
-        //Switch to main loop
-        window.requestAnimationFrame(mainLoop);
+        //Check if fade is finished
+        if (fadeValue == fadeMax) {
+            //Initialise game manager
+            gameManager = new HHManager();
+
+            //Switch to main loop
+            window.requestAnimationFrame(mainLoop);
+        } else {
+            //Continue with loader loop
+            window.requestAnimationFrame(loaderLoop);
+        }
     } else {
         //Continue with loader loop
         window.requestAnimationFrame(loaderLoop);

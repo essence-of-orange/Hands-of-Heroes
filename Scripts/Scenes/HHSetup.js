@@ -6,6 +6,7 @@ class HHSetup {
         this.gameEngine = gameEngine;
 
         //UI variables
+        this.fadeDirection = "in";
         this.iconData = {
             width: 150,
             height: 150,
@@ -30,10 +31,10 @@ class HHSetup {
         ];
         this.iconTips = [
             "'Difficult captives': In any battle if there is a captive greater and lesser in value. Unicorn cards run free.",
-            "'Sanguine': Vampiric royalty gain one value for every commoner in a battle.",
-            "'Nuisance': Goblin cards lose one value during ransoming, making them cheaper to buy back.",
+            "'Sanguine': Vampiric royalty gain one value for every corpse in a battle.",
+            "'Nuisance': Each Goblin captive costs their captor -1 in victory.",
             "'Stubborn': Dwarven cards automatically win stalemates",
-            "'Changeling': During battle play a second card within 4pts value face down. These cards may be swapped once per battle.",
+            "'Changeling': Play a second card 4pts+/- champion's value face down. Can swap cards before battle.",
             "'Haughty': Elven royalty gain one value during victory.",
             "'Really Tall': Giant players are so tall they can see everyone's hand.",
             "'Tiny': Hobbit cards cannot be captured by any card more than twice it's value."
@@ -69,6 +70,7 @@ class HHSetup {
             name: "Start Game",
             enabled: false
         };
+        this.exitValue = "";
 
         //Initialise icons
         this.initIcons();
@@ -156,6 +158,22 @@ class HHSetup {
         //Draw buttons
         buttonDraw(this.exitButton);
         buttonDraw(this.startButton);
+
+        //Fade
+        fade(this.fadeDirection);
+
+        //Check exit
+        if (this.fadeDirection == "out" & fadeValue == fadeMax) {
+            //Restore fade direction
+            this.fadeDirection = "in";
+            
+            //Execute exit function
+            if(this.exitValue == "menu"){
+                this.gameEngine.exitGame();
+            } else if (this.exitValue == "game"){
+                gameManager.openGame();
+            }
+        }
     }
 
     //Process click event
@@ -171,13 +189,15 @@ class HHSetup {
 
         //Check exit button
         if (buttonCheck(this.exitButton)) {
-            //Exit game
-            this.gameEngine.exitGame();
+            //Set exit index
+            this.exitValue = "menu";
+
+            //Set fade direction
+            this.fadeDirection = "out";
         }
 
         //Check start button
         if (buttonCheck(this.startButton)) {
-            //Start game
             this.gameEngine.startGame();
         }
     }

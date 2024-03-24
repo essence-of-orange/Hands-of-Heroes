@@ -2,7 +2,10 @@
 class HHMenu {
     //Constructor
     constructor(gameManager) {
-        //Button variables
+        //Data variables
+        this.gameManager = gameManager;
+        //UI variables
+        this.fadeDirection = "in";
         this.buttonData = {
             width: 200,
             height: 50,
@@ -16,12 +19,13 @@ class HHMenu {
             "How to Play",
             "About"
         ];
-        this.buttonFunctions = [
-            gameManager.newGame,
-            gameManager.joinGame,
-            gameManager.openSettings,
-            gameManager.openInstructions,
-            gameManager.openInfo
+        this.exitIndex = 0;
+        this.exitFunctions = [
+            this.gameManager.newGame,
+            this.gameManager.joinGame,
+            this.gameManager.openSettings,
+            this.gameManager.openInstructions,
+            this.gameManager.openInfo
         ];
         this.buttons = [];
 
@@ -58,6 +62,18 @@ class HHMenu {
             //Draw button
             buttonDraw(this.buttons[i]);
         }
+
+        //Fade
+        fade(this.fadeDirection);
+
+        //Check exit
+        if (this.fadeDirection == "out" & fadeValue == fadeMax) {
+            //Restore fade direction
+            this.fadeDirection = "in";
+
+            //Exit
+            this.exitFunctions[this.exitIndex]();
+        }
     }
 
     //Process click event
@@ -66,8 +82,11 @@ class HHMenu {
         for (var i = 0; i < this.buttons.length; i++) {
             //Check current button
             if (buttonCheck(this.buttons[i])) {
-                //Button clicked
-                this.buttonFunctions[i]();
+                //Set fade direction
+                this.fadeDirection = "out";
+
+                //Set exit index
+                this.exitIndex = i;
             }
         }
     }

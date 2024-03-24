@@ -2,7 +2,7 @@
 class HHInstructions {
     //Constructor
     constructor(gameManager) {
-        //Initialise variables
+        //Data variables
         this.gameManager = gameManager;
         this.textData = {
             textX: canvas.width / 2,
@@ -15,8 +15,10 @@ class HHInstructions {
             color: "rgba(70, 50, 30, 1)",
             leading: 2,
             title: "How to Play",
-            text: "Hands of Heroes is a game for 2-8 players. First one player must begin a new game, then send their invite code to the others. Next each player must pick a faction. Players then draw a hand of four cards, and 'battle' by playing cards into the center of the playing area. In each battle the highest card wins, returns to the owner's hand and the other cards are taken captive and taken to their dungeon. Assassin cards count as 1, unless a royal card is in the battle in which case they count as 17. If the two highest cards tie, they withdraw from the battle and the remaining cards continue. The next battle is initated by the previous winner. If all cards withdraw from the battle play passes to the next player. Battles continue until one player has lost all of their cards. Players then take turns ransoming cards until they have as many of their own cards as possible back. The winner is the player with the highest value deck."
+            text: "Hands of Heroes is a game for 2-8 players. First one player must begin a new game, then send their invite code to the others. Next each player must pick a faction. Players then draw a hand of four cards, and 'battle' by playing cards into the center of the playing area. In each battle the highest card wins, returns to the owner's hand and the other cards are taken captive and taken to their dungeon. Assassin cards count as 1, unless a royal card is in the battle in which case they count as 17. If the two highest cards tie, they defeat each other and the remaining cards continue. The next battle is initated by the previous winner. If all cards are defeated they are sent to their owner's dungeon. Battles continue until one player has lost all of their cards. Players then take turns ransoming cards until they have as many of their own cards as possible back. The winner is the player with the highest value deck."
         };
+        //UI variables
+        this.fadeDirection = "in";
         this.buttonData = {
             width: 200,
             height: 50,
@@ -74,14 +76,26 @@ class HHInstructions {
 
         //Draw exit button
         buttonDraw(this.exitButton);
+
+        //Fade
+        fade(this.fadeDirection);
+
+        //Check exit
+        if (this.fadeDirection == "out" & fadeValue == fadeMax) {
+            //Restore fade direction
+            this.fadeDirection = "in";
+            
+            //Return to menu
+            this.gameManager.openMenu();
+        }
     }
 
     //Process click event
     click(coords) {
         //Check exit button
         if (buttonCheck(this.exitButton)) {
-            //Exit game
-            this.gameManager.openMenu();
+            //Set fade direction
+            this.fadeDirection = "out";
         }
     }
 }

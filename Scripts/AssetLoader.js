@@ -56,10 +56,11 @@ class AssetLoader {
         //Asset Paths
         this.scriptPaths = [
             "./Scripts/Graphics/buttons.js",
-            "./Scripts/Logic/HHBattle.js",
+            "./Scripts/Graphics/cursor.js",
+            "./Scripts/Graphics/fade.js",
             "./Scripts/Logic/HHCard.js",
-            "./Scripts/Logic/HHDeck.js",
             "./Scripts/Logic/HHEngine.js",
+            "./Scripts/Logic/HHExchange.js",
             "./Scripts/Logic/HHGame.js",
             "./Scripts/Logic/HHLobby.js",
             "./Scripts/Logic/HHManager.js",
@@ -72,7 +73,7 @@ class AssetLoader {
             "./Scripts/Scenes/HHSettings.js",
             "./Scripts/Scenes/HHSetup.js",
             "./Scripts/Scenes/HHVictory.js"];
-        this.CardBGPaths = [
+        this.cardBGPaths = [
             "./Images/Card_BGs/Card_Unicorn.png",
             "./Images/Card_BGs/Card_Vampire.png",
             "./Images/Card_BGs/Card_Goblin.png",
@@ -80,8 +81,11 @@ class AssetLoader {
             "./Images/Card_BGs/Card_Sidhe.png",
             "./Images/Card_BGs/Card_Elf.png",
             "./Images/Card_BGs/Card_Giant.png",
-            "./Images/Card_BGs/Card_Hobbit.png"];
-        this.CardValuePaths = [
+            "./Images/Card_BGs/Card_Hobbit.png",
+            "./Images/Card_BGs/Card_Back.png",
+            "./Images/Card_BGs/Card_Defeated.png"];
+        this.cardValuePaths = [
+            "./Images/Card_Values/Card_0.png",
             "./Images/Card_Values/Card_1.png",
             "./Images/Card_Values/Card_2.png",
             "./Images/Card_Values/Card_3.png",
@@ -98,6 +102,24 @@ class AssetLoader {
             "./Images/Card_Values/Card_14.png",
             "./Images/Card_Values/Card_15.png",
             "./Images/Card_Values/Card_16.png"];
+        this.fadeBGPaths = [
+            "./Images/Fades/Fade00.png",
+            "./Images/Fades/Fade01.png",
+            "./Images/Fades/Fade02.png",
+            "./Images/Fades/Fade03.png",
+            "./Images/Fades/Fade04.png",
+            "./Images/Fades/Fade05.png",
+            "./Images/Fades/Fade06.png",
+            "./Images/Fades/Fade07.png",
+            "./Images/Fades/Fade08.png",
+            "./Images/Fades/Fade09.png",
+            "./Images/Fades/Fade10.png",
+            "./Images/Fades/Fade11.png",
+            "./Images/Fades/Fade12.png",
+            "./Images/Fades/Fade13.png",
+            "./Images/Fades/Fade14.png",
+            "./Images/Fades/Fade15.png",
+            "./Images/Fades/Fade16.png"];
         this.iconDarkPaths = [
             "./Images/Icons/Icon_Dark_Unicorn.png",
             "./Images/Icons/Icon_Dark_Vampire.png",
@@ -130,6 +152,8 @@ class AssetLoader {
         this.buttonBGPath = "./Images/UI/ButtonBG.png";
         this.gameBGPath = "./Images/UI/GameBG.png";
         this.infoBGPath = "./Images/UI/InfoBG.png";
+        this.tableBGPath = "./Images/UI/Table.png";
+        this.cursorSpritePath = "./Images/UI/Cursor.png";
 
         this.mainFontPath = "url(./Fonts/Immortal.ttf)";
         this.textFontPath = "url(./Fonts/Benegraphic.ttf)";
@@ -145,6 +169,7 @@ class AssetLoader {
         this.scripts = [];
         this.cardBGs = [];
         this.cardValues = [];
+        this.fadeBGs = [];
         this.iconsDark = [];
         this.iconsLight = [];
         this.iconsChat = [];
@@ -152,6 +177,8 @@ class AssetLoader {
         this.buttonBG;
         this.gameBG;
         this.infoBG;
+        this.tableBG;
+        this.cursorSprite;
 
         this.mainFont;
         this.textFont;
@@ -182,24 +209,41 @@ class AssetLoader {
             this.status.totalResources++;
         }
 
-        //Load card textures
-        for (let i = 0; i < this.CardBGPaths.length; i++) {
+        //Load card bgs
+        for (let i = 0; i < this.cardBGPaths.length; i++) {
             //Load cardBG
             this.cardBGs.push(new Image());
-            this.cardBGs[i].src = this.CardBGPaths[i];
+            this.cardBGs[i].src = this.cardBGPaths[i];
             this.cardBGs[i].onload = function () { loader.status.totalLoaded++; };
 
+            //Update tracker
+            this.status.totalResources += 1;
+        }
+
+        //Load card values
+        for (let i = 0; i < this.cardValuePaths.length; i++){
             //Load card value
             this.cardValues.push(new Image());
-            this.cardValues[i].src = this.CardValuePaths[i];
+            this.cardValues[i].src = this.cardValuePaths[i];
             this.cardValues[i].onload = function () { loader.status.totalLoaded++; };
 
             //Update tracker
-            this.status.totalResources += 2;
+            this.status.totalResources += 1;
+        }
+
+        //Load fade BGs
+        for (let i = 0; i < this.fadeBGPaths.length; i++){
+            //Load fade bg
+            this.fadeBGs.push(new Image());
+            this.fadeBGs[i].src = this.fadeBGPaths[i];
+            this.fadeBGs[i].onload = function () { loader.status.totalLoaded++; };
+
+            //Update tracker
+            this.status.totalResources += 1;
         }
 
         //Load card icons
-        for (let i = 0; i < this.CardBGPaths.length; i++) {
+        for (let i = 0; i < this.iconDarkPaths.length; i++) {
             //Load dark icon
             this.iconsDark.push(new Image());
             this.iconsDark[i].src = this.iconDarkPaths[i];
@@ -214,7 +258,7 @@ class AssetLoader {
             this.status.totalResources += 2;
         }
 
-        //Load GUI background textures
+        //Load GUI images
         this.buttonBG = new Image();
         this.buttonBG.src = this.buttonBGPath;
         this.buttonBG.onload = function () { loader.status.totalLoaded++; };
@@ -224,7 +268,13 @@ class AssetLoader {
         this.infoBG = new Image();
         this.infoBG.src = this.infoBGPath;
         this.infoBG.onload = function () { loader.status.totalLoaded++; };
-        this.status.totalResources += 3;
+        this.tableBG = new Image();
+        this.tableBG.src = this.tableBGPath;
+        this.tableBG.onload = function () { loader.status.totalLoaded++; };
+        this.cursorSprite = new Image();
+        this.cursorSprite.src = this.cursorSpritePath;
+        this.cursorSprite.onload = function () { loader.status.totalLoaded++; };
+        this.status.totalResources += 5;
 
         //Load fonts
         this.mainFont = new FontFace("mainFont", this.mainFontPath);

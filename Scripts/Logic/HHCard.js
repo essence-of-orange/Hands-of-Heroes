@@ -1,6 +1,8 @@
 class HHCard {
     //Constructor
-    constructor(){
-        
+    constructor(faction, value){
+        this.faction = faction;
+        this.value = value;
+        this.defeated = false;
     }
 }

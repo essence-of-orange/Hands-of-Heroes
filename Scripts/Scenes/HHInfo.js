@@ -2,7 +2,7 @@
 class HHInfo {
     //Constructor
     constructor(gameManager) {
-        //Initialise variables
+        //Data variables
         this.gameManager = gameManager;
         this.textData = {
             textX: canvas.width / 2,
@@ -17,6 +17,8 @@ class HHInfo {
             title: "About this game",
             text: "Hands of Heroes © Peter Houlihan 2024"
         };
+        //UI variables
+        this.fadeDirection = "in";
         this.buttonData = {
             width: 200,
             height: 50,
@@ -74,14 +76,26 @@ class HHInfo {
 
         //Draw exit button
         buttonDraw(this.exitButton);
+
+        //Fade
+        fade(this.fadeDirection);
+
+        //Check exit
+        if (this.fadeDirection == "out" & fadeValue == fadeMax) {
+            //Restore fade direction
+            this.fadeDirection = "in";
+            
+            //Return to menu
+            this.gameManager.openMenu();
+        }
     }
 
     //Process click event
     click(coords) {
         //Check exit button
         if (buttonCheck(this.exitButton)) {
-            //Exit game
-            this.gameManager.openMenu();
+            //Set fade direction
+            this.fadeDirection = "out";
         }
     }
 }

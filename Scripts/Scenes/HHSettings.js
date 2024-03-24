@@ -2,7 +2,7 @@
 class HHSettings {
     //Constructor
     constructor(gameManager) {
-        //Initialise variables
+        //Logic variables
         this.gameManager = gameManager;
         this.settings = {
             maxPlayers: 8,
@@ -18,6 +18,8 @@ class HHSettings {
                 true
             ]
         };
+        //UI variables
+        this.fadeDirection = "in";
         this.titleData = {
             titleX: canvas.width / 2,
             titleY: 110,
@@ -185,17 +187,28 @@ class HHSettings {
             controlDraw(this.controls[i]);
         }
 
-
         //Draw exit button
         buttonDraw(this.exitButton);
+
+        //Fade
+        fade(this.fadeDirection);
+
+        //Check exit
+        if (this.fadeDirection == "out" & fadeValue == fadeMax) {
+            //Restore fade direction
+            this.fadeDirection = "in";
+            
+            //Return to menu
+            this.gameManager.openMenu();
+        }
     }
 
     //Process click event
     click(coords) {
         //Check exit button
         if (buttonCheck(this.exitButton)) {
-            //Return to menu
-            this.gameManager.openMenu();
+            //Set fade direction
+            this.fadeDirection = "out";
         }
 
         //Check max player controls

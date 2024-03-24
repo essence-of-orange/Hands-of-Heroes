@@ -1,7 +1,7 @@
 //Draw button graphic
 function buttonDraw(button) {
     //Draw background
-    ctx.drawImage(loader.buttonBG, button.startX, button.startY);
+    ctx.drawImage(loader.buttonBG, button.startX, button.startY, button.width, button.height);
 
     //Draw text
     if (button.enabled) {

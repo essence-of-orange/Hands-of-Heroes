@@ -34,25 +34,13 @@ class HHLobby {
             const inviteButton = document.createElement("button");
             document.getElementById("member_list").appendChild(inviteDiv);
             inviteDiv.appendChild(inviteButton);
-
-            //Check if clipboard is accessible
-            if (window.isSecureContext) {
-                //Add copy functionality
-                inviteButton.innerText = 'Copy invite code';
-                inviteButton.style.fontFamily = "'titleFont'";
-                inviteButton.style.background = 'url(./Images/UI/ButtonBG.png)';
-                inviteButton.style.backgroundSize = '100% 100%';
-                inviteButton.style.border = 'none';
-                inviteButton.onclick = function () { navigator.clipboard.writeText(gameManager.engine.networking.id); };
-            } else {
-                //Add prompt functionality
-                inviteButton.innerText = 'Click to see invite code';
-                inviteButton.style.fontFamily = "'titleFont'";
-                inviteButton.style.background = 'url(./Images/UI/ButtonBG.png)';
-                inviteButton.style.backgroundSize = '100% 100%';
-                inviteButton.style.border = 'none';
-                inviteButton.onclick = function () { alert(gameManager.engine.networking.id) };
-            }
+            inviteButton.style.fontFamily = "'titleFont'";
+            inviteButton.style.background = 'url(./Images/UI/ButtonBG.png)';
+            inviteButton.style.backgroundSize = '100% 100%';
+            inviteButton.style.border = 'none';
+            inviteButton.style.height = '30px';
+            inviteButton.innerText = 'Get invite code';
+            inviteButton.onclick = function () { gameManager.engine.getCode(); };
         }
 
         //Unlock chat
