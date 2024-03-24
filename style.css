@@ -61,6 +61,10 @@ main {
     flex-grow: 0;
 }
 
+#canvas {
+    cursor:none;
+}
+
 #lobby_container {
     height: calc(100vh - 650px);
     display: flex;
